@@ -38,17 +38,17 @@ const routes: RouteObject[] = [
     loader: RootLoader,
     children: [] // ...dynamicRoutes
   },
-  {
-    path: '/user',
-    Component: lazy(() => import('@/layouts/userLayout')),
-    loader: RootLoader,
-    children: [
-      {
-        path: '/user/user2',
-        Component: lazy(modules[getPath('home')])
-      }
-    ]
-  },
+  // {
+  //   path: '/user',
+  //   Component: lazy(() => import('@/layouts/userLayout')),
+  //   loader: RootLoader,
+  //   children: [
+  //     {
+  //       path: '/user/user2',
+  //       Component: lazy(modules[getPath('home')])
+  //     }
+  //   ]
+  // },
   {
     path: '/login',
     loader: LoginLoader,

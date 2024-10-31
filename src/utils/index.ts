@@ -262,3 +262,45 @@ export function deepClone<T>(source: T): T {
 
   return targetObj;
 }
+
+// 判断数据是否为空，多用于数组和对象的判断
+export function isNotEmpty(value: unknown) {
+  switch (typeof value) {
+    case 'undefined': {
+      return false;
+    }
+
+    case 'string': {
+      return value.length !== 0;
+    }
+
+    case 'object': {
+      if(Array.isArray(value)) {
+        return value.length !== 0;
+      } else if(value === null) {
+        return false;
+      } else {
+        return Object.keys(value).length !== 0;
+      }
+    }
+
+    default: {
+      return true;
+    }
+  }
+}
+
+/**
+ * 补充path前的斜杠
+ * @param path
+ * @returns {string}
+ */
+export function padSlashFn(path?: string): string {
+  if(!path) return '';
+
+  return `/${path.replace(/^\/+/, '')}`;
+}
+
+/** 拼接查询参数 */
+export function padQuery(url = '', params = {}) {
+}
