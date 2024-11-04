@@ -94,12 +94,15 @@ export default defineConfig(({ mode }) => {
       assetsInlineLimit: 1024 * 10, // 小于此阈值的导入或引用资源将内联为 base64 编码 默认4096
       cssCodeSplit: true, // 启用 CSS 代码拆分 默认true
       minify: 'esbuild', // 混淆器，terser构建后文件体积更小  // 默认esbuild 它比 terser 快 20-40 倍，压缩率只差 1%-2%
-      terserOptions: {
-        compress: {
-          // 生产环境时移除console.log调试代码 生产环境时移除
-          drop_console: isHideLog,
-          drop_debugger: isHideLog
-        }
+      // terserOptions: {
+      //   compress: {
+      //     // 生产环境时移除console.log调试代码 生产环境时移除
+      //     drop_console: isHideLog,
+      //     drop_debugger: isHideLog
+      //   }
+      // },
+      esbuild: {
+        drop: isHideLog ? ['console', 'debugger'] : []
       },
       rollupOptions: {
         output: { // 对打包的静态资源做处理
@@ -133,6 +136,15 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_APP_SERVE_URl,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
+    },
+
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // api: 'modern' // or 'modern-compiler'
+          silenceDeprecations: ['legacy-js-api'] // 去除警告提示 Deprecation Warning..
         }
       }
     }

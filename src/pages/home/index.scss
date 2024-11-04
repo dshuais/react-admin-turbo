@@ -1,0 +1,9 @@
+.Home-ka3tvs {
+  .button {
+    --ds-button-height: 100px;
+    width: 200px;
+    height: var(--ds-button-height);
+    background-color: red;
+    border-radius: 20px;
+  }
+}

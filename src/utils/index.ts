@@ -302,5 +302,5 @@ export function padSlashFn(path?: string): string {
 }
 
 /** 拼接查询参数 */
-export function padQuery(url = '', params = {}) {
-}
+// export function padQuery(url = '', params = {}) {
+// }
