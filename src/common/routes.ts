@@ -8,6 +8,7 @@
 
 /**
  * 动态配置路由 ------ 这里是前端自己的动态路由
+ * 二开时且后端路由时 可让后端根据这个格式返回路由数据
  *
  * @id 路由id 必填 且唯一
  * @index 是否是首页 index为true时不能配置children
@@ -15,7 +16,10 @@
  * @component 路由组件 值为pages目录下文件夹名称
  *      嵌套路由时，目录结构应为pages\*\router\xx\index.tsx
  *      因为减少性能开销 页面规则只支持两种：pages\xx and pages\*\router\xx
- * @parent 父级路由path 默认为/
+ *
+ * @parent 父级路由path 默认为/ 对应路由表router/routes一级目录path
+ *      使用其他layout时，请配置parent 且在router/routes中配置对应的一级目录
+ *
  * @handle 路由配置项 自定义
  * @protected 当前路由是否需要权限 默认true
  * @children 子路由
@@ -30,53 +34,5 @@ export const dynamicRoutes: App.Route[] = [
       title: '首页',
       roles: ['admin', 'other']
     }
-  },
-  {
-    id: 'Home2',
-    path: 'home2',
-    component: 'home2',
-    handle: {
-      title: '首页',
-      roles: ['admin', 'other']
-    },
-    protected: false,
-    children: [
-      {
-        id: 'Home3',
-        path: 'home3',
-        component: 'home/router/home3'
-      }
-    ]
-  },
-  {
-    id: 'User1',
-    index: true,
-    component: 'home2',
-    parent: '/user',
-    handle: {
-      title: 'user',
-      roles: ['admin', 'other']
-    }
-  },
-  {
-    id: 'User3',
-    path: 'user3',
-    component: 'home',
-    parent: '/user',
-    handle: {
-      title: 'user',
-      roles: ['admin', 'other']
-    }
-  },
-  {
-    id: 'User4',
-    path: 'user4',
-    component: 'home/router/home3',
-    parent: '/user',
-    handle: {
-      title: 'user',
-      roles: ['admin', 'other']
-    },
-    protected: false
   }
 ];

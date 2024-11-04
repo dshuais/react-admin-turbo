@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 import { createJSONStorage } from 'zustand/middleware';
 
-import { deepClone } from '@/utils';
+import { deepClone, padSlashFn } from '@/utils';
 import routes, { getPath, modules } from '@/router/routes';
 import { ProtectedLoader } from '@/permission';
 import { dynamicRoutes, StoreKey } from '@/common';
@@ -106,7 +106,7 @@ function filterToRouter(routes: Route[]) {
 
   newRoutes.map(route => {
     const { parent, ...r } = route;
-    const k = parent || '/';
+    const k = padSlashFn(parent) || '/';
     const v = rs.get(k);
     if(v) rs.set(k, [...v, r]);
     else rs.set(k, [r]);
@@ -133,7 +133,7 @@ function filterAsyncRouter(routes: Route[], parentPath?: string) {
       Component: createComponent(route.component),
       // children: route.children && route.children.length ? filterAsyncRouter(route.children) : void 0,
       handle: route.handle,
-      parent: route.parent || '/'
+      parent: padSlashFn(route.parent) || '/'
     };
 
     if(route.protected !== false) {
@@ -167,5 +167,5 @@ function createComponent(name: string) {
  */
 function joinPath(path?: string, parent?: string) {
   if(!path) return void 0;
-  return `${parent || ''}/${path.replace(/^\/+/, '')}`;
+  return `${padSlashFn(parent)}${padSlashFn(path)}`;
 }
