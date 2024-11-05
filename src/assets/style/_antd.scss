@@ -1,0 +1,42 @@
+// proComponents layout重写
+.ant-pro-layout {
+    height: 100vh;
+
+    .ant-pro-layout-container  {
+        .ant-pro-layout-content {
+            .ant-pro-page-container {
+                height: calc(100vh - 56px);
+                display: flex;
+                flex-direction: column;
+                .ant-page-header  {
+                    padding-top: 20px;
+                    .ant-page-header-heading {
+                        display: none;
+                    }
+                    .ant-page-header-breadcrumb {
+                        padding-top: 0px;
+                    }
+                }
+
+                .ant-pro-grid-content {
+                    flex: 1;
+                    .ant-pro-grid-content-children {
+                        height: 100%;
+                        .ant-pro-page-container-children-container {
+                            height: 100%;
+                            padding: 0 20px 20px;
+
+                            .container-card {
+                                height: 100%;
+
+                                .ant-pro-card-body  {
+                                    flex: 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

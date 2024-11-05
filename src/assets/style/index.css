@@ -1,3 +1,5 @@
+@import './_antd.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

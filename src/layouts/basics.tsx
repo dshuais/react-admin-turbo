@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-04-07 10:25:43
  * @LastEditors: dushuai
- * @LastEditTime: 2024-08-19 21:47:32
+ * @LastEditTime: 2024-11-05 23:19:40
  * @description: BasicsLayout
  */
 import React, { useState } from 'react';
@@ -10,7 +10,10 @@ import { Outlet } from 'react-router-dom';
 import { PageContainer, ProCard, ProLayout } from '@ant-design/pro-components';
 import { Dropdown, Input } from 'antd';
 import { GithubFilled, InfoCircleFilled, LogoutOutlined, PlusCircleFilled, QuestionCircleFilled, SearchOutlined } from '@ant-design/icons';
+
 import defaultProps from '@/common/_defaultProps';
+
+import logo from '@/assets/image/turbo-logo.png';
 
 export default function BasicsLayout() {
 
@@ -18,6 +21,8 @@ export default function BasicsLayout() {
 
   return (
     <ProLayout
+      title={import.meta.env.VITE_APP_TITLE}
+      logo={<img src={logo} alt="logo" />}
       token={{
         header: {
           // heightLayoutHeader: 108
@@ -70,7 +75,7 @@ export default function BasicsLayout() {
         <div
           style={{
             textAlign: 'center',
-            paddingBlockStart: 12
+            paddingBottom: 12
           }}
         >
           <div>© 2021 Made with love</div>
@@ -101,9 +106,9 @@ export default function BasicsLayout() {
       location={{
         pathname
       }}
-      menu={{
-        type: 'group'
-      }}
+      // menu={{
+      //   type: 'group'
+      // }}
       avatarProps={{
         src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
         size: 'small',
@@ -133,7 +138,7 @@ export default function BasicsLayout() {
           props.layout !== 'side' && document.body.clientWidth > 1400 ? (
             <div
               key="SearchOutlined"
-              aria-hidden
+              // aria-hidden
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -197,10 +202,10 @@ export default function BasicsLayout() {
         </div>
       )}
       layout="mix"
-      splitMenus
+      // splitMenus
     >
       <PageContainer>
-        <ProCard>
+        <ProCard className="container-card">
           <Outlet />
         </ProCard>
       </PageContainer>
