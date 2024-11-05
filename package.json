@@ -12,6 +12,8 @@
     "prod": "tsc && vite build"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
+    "@ant-design/pro-components": "^2.8.1",
     "ahooks": "^3.8.0",
     "antd": "^5.16.0",
     "axios": "^1.6.8",
