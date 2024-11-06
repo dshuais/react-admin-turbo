@@ -11,6 +11,7 @@ import { createJSONStorage, persist, devtools } from 'zustand/middleware';
 
 type Store = {
   token: string
+  userInfo: Res.UserInfo
   // ... other state properties
 }
 
@@ -18,13 +19,19 @@ type Actions = {
   SET_TOKEN: (token: string) => void
   REMOVE_TOKEN: () => void
   RESET: () => void
+  SET_USER_INFO: () => void
   SET_STATE: (data: { key: keyof Store, val: Store[keyof Store] }) => void
   // ... other action creators
 }
 
 // define the initial state
 const initialState = (): Store => ({
-  token: ''
+  token: '',
+  userInfo: {
+    id: 1,
+    nickName: '',
+    avatar: ''
+  }
 });
 
 /**
@@ -50,6 +57,16 @@ export const useAppStore = create<Store & Actions>()(devtools(
       REMOVE_TOKEN() {
         set({ token: '' });
         // set(state => ({ token: '' }))
+      },
+
+      SET_USER_INFO() {
+        set({
+          userInfo: {
+            id: 1,
+            nickName: '七妮妮',
+            avatar: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg'
+          }
+        });
       },
 
       RESET() {

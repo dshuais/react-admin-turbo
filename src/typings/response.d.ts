@@ -17,4 +17,10 @@ declare namespace Res {
     msg: string
   }
 
+  type UserInfo = {
+    id?: number,
+    nickName: string,
+    avatar: string,
+  }
+
 }

@@ -10,11 +10,13 @@ import { MakeState, createCustomStore } from '../store';
 import { createJSONStorage } from 'zustand/middleware';
 
 type Store = {
-  theme: 'dark' | 'light'
+  theme: 'dark' | 'light',
+  loading: boolean
 }
 
 const initialState = (): Store => ({
-  theme: 'light'
+  theme: 'light',
+  loading: false
 });
 
 /**
@@ -32,6 +34,14 @@ export const useSettings = createCustomStore(
 
     SET_THEME(theme: Store['theme']) {
       set({ theme });
+    },
+
+    /**
+     * 控制主内容区是否加载中
+     * @param loading
+     */
+    SET_LOADING(loading: Store['loading']) {
+      set({ loading });
     }
 
   }),

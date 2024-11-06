@@ -190,12 +190,12 @@ export const $copy = (text: string, origin: boolean = true): Promise<boolean> =>
 
 /**
  * 获取图片路径
- * @param {string} name 图片名称，绝对与assets/img/文件夹
+ * @param {string} name 图片名称，绝对与assets/文件夹
  * @returns {string} 图片的绝对路径
  * @Readmore https://vitejs.cn/guide/assets.html#new-url-url-import-meta-url
  */
 export const getImageUrl = (name: string): string => {
-  return new URL(`../assets/img/${name}`, import.meta.url).href;
+  return new URL(`../assets/${name}`, import.meta.url).href;
 };
 
 /**
@@ -263,7 +263,11 @@ export function deepClone<T>(source: T): T {
   return targetObj;
 }
 
-// 判断数据是否为空，多用于数组和对象的判断
+/**
+ * 判断数据是否为空，多用于数组和对象的判断
+ * @param value
+ * @returns
+ */
 export function isNotEmpty(value: unknown) {
   switch (typeof value) {
     case 'undefined': {
@@ -288,6 +292,16 @@ export function isNotEmpty(value: unknown) {
       return true;
     }
   }
+}
+
+/**
+ * 判断是否为网络地址
+ * @param url url
+ * @returns
+ */
+export function isNetworkUrl(url: string) {
+  if(!url) return false;
+  return /^(http|https):\/\//.test(url);
 }
 
 /**
