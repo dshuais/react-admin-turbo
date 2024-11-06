@@ -26,14 +26,17 @@ declare namespace App {
    */
   type Route = {
     index?: boolean
-    id: string
+    id: number
+    name?: string
+    icon?: string
     path?: string
     component: string
     redirect?: string
-    children?: Array<Route>
-    handle?: Handle
     parent?: string
+    parentId?: number
     protected?: boolean
+    handle?: Handle
+    children?: Array<Route>
   }
 
   type Handle = {

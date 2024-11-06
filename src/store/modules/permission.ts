@@ -9,7 +9,8 @@ import { dynamicRoutes, StoreKey } from '@/common';
 import { MakeState, createCustomStore } from '../store';
 
 type Store = {
-  routes: Array<Route>
+  routes: Array<Route>,
+  menus: Array<Route>
 }
 
 type Actions = {
@@ -27,7 +28,8 @@ export type Route = App.Route
 const APP_STORE_VERSION: number = 0.1;
 
 const initialState = (): Store => ({
-  routes: []
+  routes: [],
+  menus: []
 });
 
 export const usePermission = createCustomStore<Store, Actions>(
@@ -49,6 +51,13 @@ export const usePermission = createCustomStore<Store, Actions>(
       set({ routes: [] });
     },
 
+    SET_MENUS(menus: Array<Route>) {
+      set({ menus });
+    },
+    REMOVE_MENUS() {
+      set({ menus: [] });
+    },
+
     /**
      * 生成路由表
      */
@@ -67,6 +76,7 @@ export const usePermission = createCustomStore<Store, Actions>(
 
           routes[index].children = [...pre, ...children];
         });
+        console.log('routes', routes, r.get('/'));
 
         resolve(routes);
       });
@@ -124,15 +134,20 @@ function filterAsyncRouter(routes: Route[], parentPath?: string) {
   const newRoutes = deepClone<Route[]>(routes);
 
   return newRoutes.map(route => {
-    const parent = parentPath || route.parent;
+    const parent = getParentPath(newRoutes, route, parentPath);
 
     const r: RouteObject & { parent: string } = {
       index: route.index,
-      id: route.id,
+      id: route.id as unknown as string,
       path: joinPath(route.path, parent),
       Component: createComponent(route.component),
       // children: route.children && route.children.length ? filterAsyncRouter(route.children) : void 0,
-      handle: route.handle,
+      handle: {
+        name: route.name,
+        icon: route.icon,
+        parentId: route.parentId,
+        ...(route.handle || {})
+      },
       parent: padSlashFn(route.parent) || '/'
     };
 
@@ -155,7 +170,7 @@ function filterAsyncRouter(routes: Route[], parentPath?: string) {
  * @returns
  */
 function createComponent(name: string) {
-  // return lazy(components[`${name}/index.tsx`])
+  console.log('modules:>> ', modules);
   return lazy(modules[getPath(name)]);
 }
 
@@ -168,4 +183,20 @@ function createComponent(name: string) {
 function joinPath(path?: string, parent?: string) {
   if(!path) return void 0;
   return `${padSlashFn(parent)}${padSlashFn(path)}`;
+}
+
+/**
+ * 获取树形结构的父级path 或 嵌套路由的父级path （只判断两层，不做过多层级处理）
+ * @param list 所有路由
+ * @param route 当前路由
+ * @param parentPath 父级path
+ * @returns 父级path
+ */
+function getParentPath(list: Route[], route: Route, parentPath?: string) {
+  const parent = list.find(item => item.id === route.parentId),
+    pParent = (parent?.parentId && list.find(item => item.id === parent.parentId)) || void 0;
+
+  const path = joinPath(parent?.path, pParent?.path);
+
+  return path || parentPath || route.parent;
 }

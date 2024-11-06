@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-11-05 23:19:40
  * @description: BasicsLayout
  */
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Dropdown } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
@@ -13,7 +13,7 @@ import { PageContainer, ProCard, ProLayout } from '@ant-design/pro-components';
 
 import { Common, Header, Footer, Background, Content } from './Basics/index';
 import defaultProps from '@/common/_defaultProps';
-import { useAppStore, useSelector, useSettings } from '@/store';
+import { useAppStore, usePermission, useSelector, useSettings } from '@/store';
 
 export default function BasicsLayout() {
 
@@ -21,6 +21,11 @@ export default function BasicsLayout() {
 
   const { loading } = useSettings(useSelector(['loading']));
   const { userInfo } = useAppStore(useSelector(['userInfo']));
+  const { routes } = usePermission(useSelector(['routes']));
+
+  useEffect(() => {
+    console.log('routes:>> ', routes);
+  }, [routes]);
 
   return (
     <ProLayout

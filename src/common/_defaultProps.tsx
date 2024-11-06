@@ -12,21 +12,17 @@ export default {
       {
         path: '/welcome',
         name: '欢迎',
-        icon: <SmileFilled />,
-        component: './Welcome'
+        icon: <SmileFilled />
       },
       {
         path: '/admin',
         name: '管理页',
         icon: <CrownFilled />,
-        access: 'canAdmin',
-        component: './Admin',
         routes: [
           {
             path: '/admin/sub-page1',
             name: '一级页面',
-            icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
-            component: './Welcome'
+            icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg'
           },
           {
             path: '/admin/sub-page2',

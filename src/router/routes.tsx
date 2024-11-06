@@ -19,12 +19,15 @@ export type Module = {
 
 /** 所有pages下页面文件 */
 const pagesModules = import.meta.glob('@/pages/*/index.tsx') as unknown as Module;
-/** 所有pages\*\router下嵌套页面文件 */
-const nestModules = import.meta.glob('@/pages/*/router/*/index.tsx') as unknown as Module;
+/** 所有pages下目录页面文件 */
+const menusModules = import.meta.glob('@/pages/*/*/index.tsx') as unknown as Module;
+/** 所有pages\**\router下嵌套页面文件 */
+const nestModules = import.meta.glob('@/pages/**/routes/*/index.tsx') as unknown as Module;
 /** 所有页面文件 */
 export const modules: Module = {
   ...pagesModules,
-  ...nestModules
+  ...nestModules,
+  ...menusModules
 };
 
 /**
