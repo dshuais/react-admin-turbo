@@ -40,8 +40,9 @@ declare namespace App {
   }
 
   type Handle = {
-    title?: string
+    name?: string
     icon?: string
+    parentId?: number
     roles?: string[] // 'admin' | 'other'
   }
 

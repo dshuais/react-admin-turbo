@@ -35,4 +35,13 @@ declare namespace Settings {
     url?: string;
     onClick?: () => void;
   }
+
+  /** 目录数据 */
+  type Menu = {
+    name: string;
+    icon: string;
+    path: string;
+    routes?: Menu[];
+    component?: string;
+  }
 }

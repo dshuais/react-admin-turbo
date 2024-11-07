@@ -12,7 +12,6 @@ import { LogoutOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard, ProLayout } from '@ant-design/pro-components';
 
 import { Common, Header, Footer, Background, Content } from './Basics/index';
-import defaultProps from '@/common/_defaultProps';
 import { useAppStore, usePermission, useSelector, useSettings } from '@/store';
 
 export default function BasicsLayout() {
@@ -21,11 +20,11 @@ export default function BasicsLayout() {
 
   const { loading } = useSettings(useSelector(['loading']));
   const { userInfo } = useAppStore(useSelector(['userInfo']));
-  const { routes } = usePermission(useSelector(['routes']));
+  const { menus } = usePermission(useSelector(['menus']));
 
   useEffect(() => {
-    console.log('routes:>> ', routes);
-  }, [routes]);
+    console.log('routes:>> ', menus);
+  }, [menus]);
 
   return (
     <ProLayout
@@ -34,10 +33,14 @@ export default function BasicsLayout() {
       {...Footer}
       {...Background}
       {...Content}
-      {...defaultProps}
+      // {...defaultProps}
       loading={loading}
       location={{
         pathname
+      }}
+      route={{
+        path: '/',
+        routes: menus
       }}
       avatarProps={{
         src: userInfo.avatar,

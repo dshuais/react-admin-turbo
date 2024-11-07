@@ -8,14 +8,17 @@ import { ProtectedLoader } from '@/permission';
 import { dynamicRoutes, StoreKey } from '@/common';
 import { MakeState, createCustomStore } from '../store';
 
+type Menu = Settings.Menu[];
+
 type Store = {
   routes: Array<Route>,
-  menus: Array<Route>
+  menus: Menu
 }
 
 type Actions = {
   SET_ROUTER: (routes: Array<Route>) => void
   REMOVE_ROUTER: () => void
+  SET_MENUS: (menus: Menu) => void
   GenerateRoutes: () => Promise<RouteObject[]>
 }
 
@@ -51,7 +54,7 @@ export const usePermission = createCustomStore<Store, Actions>(
       set({ routes: [] });
     },
 
-    SET_MENUS(menus: Array<Route>) {
+    SET_MENUS(menus: Menu) {
       set({ menus });
     },
     REMOVE_MENUS() {
@@ -76,7 +79,9 @@ export const usePermission = createCustomStore<Store, Actions>(
 
           routes[index].children = [...pre, ...children];
         });
-        console.log('routes', routes, r.get('/'));
+
+        const menus = filterToMenus(r.get('/') || []);
+        get().SET_MENUS(menus);
 
         resolve(routes);
       });
@@ -165,12 +170,29 @@ function filterAsyncRouter(routes: Route[], parentPath?: string) {
 }
 
 /**
+ * 处理侧边栏菜单
+ * @param routes 路由表树形结构
+ * @param parentId 上级菜单id
+ * @returns menus
+ */
+function filterToMenus(routes: RouteObject[], parentId?: number): Menu {
+  return routes.filter(route => route.handle?.parentId === parentId).map(route => {
+    return {
+      name: route.handle?.name,
+      path: route.path || '/',
+      icon: route.handle?.icon,
+      routes: filterToMenus(routes, route.id as any)
+    } as Settings.Menu;
+  });
+}
+
+/**
  * 获取动态页面
  * @param name
  * @returns
  */
 function createComponent(name: string) {
-  console.log('modules:>> ', modules);
+  // console.log('modules:>> ', modules);
   return lazy(modules[getPath(name)]);
 }
 

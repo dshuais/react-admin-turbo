@@ -15,6 +15,7 @@
  * @path 路由路径 index为true时可以不填
  * @name 路由名称 在侧边栏展示
  * @icon 路由图标 在侧边栏展示
+ * @menuType 菜单类型 可选值：'M' | 'C' | 'link'
  * @component 路由组件 值为pages目录下文件夹名称 和 pages目录下第一级文件名称
  *      嵌套路由时，目录结构应为pages\**\routes\xx\index.tsx
  *      因为减少性能开销 页面规则只支持三种：
@@ -39,21 +40,21 @@ export const dynamicRoutes: App.Route[] = [
     index: true,
     component: 'home',
     name: '首页',
-    icon: '首页'
+    icon: 'icon'
   },
   {
     id: 10,
     path: 'home2',
     component: 'home2',
     name: '一级路由',
-    icon: '一级路由'
+    icon: 'icon'
   },
   {
     id: 2,
     path: 'home3',
     component: 'home2/home3',
     name: '一级路由-1',
-    icon: '一级路由-1',
+    icon: 'icon-1',
     parentId: 10,
     children: [
       {
@@ -61,7 +62,7 @@ export const dynamicRoutes: App.Route[] = [
         path: 'home2_1',
         component: 'home2/routes/home3_1',
         name: '一级路由-1-1',
-        icon: '一级路由-1-1'
+        icon: 'icon'
       }
     ]
   },
@@ -70,7 +71,7 @@ export const dynamicRoutes: App.Route[] = [
     path: 'home4',
     component: 'home2/home4',
     name: '一级路由-2',
-    icon: '一级路由-2',
+    icon: 'icon',
     parentId: 10
   },
   {
@@ -78,7 +79,7 @@ export const dynamicRoutes: App.Route[] = [
     path: 'home5',
     component: 'home2/home5',
     name: '一级路由-3',
-    icon: '一级路由-3',
+    icon: 'icon',
     parentId: 3
   }
 ];
