@@ -2,11 +2,11 @@
  * @Author: dushuai
  * @Date: 2024-04-07 10:25:43
  * @LastEditors: dushuai
- * @LastEditTime: 2024-11-05 23:19:40
+ * @LastEditTime: 2024-11-09 23:50:39
  * @description: BasicsLayout
  */
 import { ReactNode, useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard, ProLayout } from '@ant-design/pro-components';
@@ -17,6 +17,7 @@ import { useAppStore, usePermission, useSelector, useSettings } from '@/store';
 export default function BasicsLayout() {
 
   const [pathname, setPathname] = useState('/');
+  const navigate = useNavigate();
 
   const { loading } = useSettings(useSelector(['loading']));
   const { userInfo } = useAppStore(useSelector(['userInfo']));
@@ -68,7 +69,9 @@ export default function BasicsLayout() {
       menuItemRender={(item, dom) => (
         <div
           onClick={() => {
-            setPathname(item.path || '/');
+            const path = item.path || '';
+            navigate(path);
+            setPathname(path);
           }}
         >
           {dom}
