@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2024-03-29 16:17:20
  * @LastEditors: dushuai
- * @LastEditTime: 2024-08-19 22:09:31
+ * @LastEditTime: 2024-11-11 00:34:01
  * @description: 路由表
  */
 import { ComponentType, lazy } from 'react';
@@ -56,17 +56,17 @@ const routes: RouteObject[] = [
     path: '/login',
     loader: LoginLoader,
     action: LoginAction,
-    Component: lazy(modules[getPath('login')])
+    Component: lazy(modules[getPath('common/login')])
   },
   {
     // logout路由只用来退出登录，不展示页面
     path: '/logout',
     action: LogoutAction,
-    Component: lazy(modules[getPath('error')])
+    Component: lazy(modules[getPath('common/error')])
   },
   {
     path: '*',
-    Component: lazy(modules[getPath('error')])
+    Component: lazy(modules[getPath('common/error')])
   }
 ];
 

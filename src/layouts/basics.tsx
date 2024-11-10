@@ -2,10 +2,10 @@
  * @Author: dushuai
  * @Date: 2024-04-07 10:25:43
  * @LastEditors: dushuai
- * @LastEditTime: 2024-11-09 23:50:39
+ * @LastEditTime: 2024-11-11 00:56:37
  * @description: BasicsLayout
  */
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
@@ -23,10 +23,6 @@ export default function BasicsLayout() {
   const { userInfo } = useAppStore(useSelector(['userInfo']));
   const { menus } = usePermission(useSelector(['menus']));
 
-  useEffect(() => {
-    console.log('routes:>> ', menus);
-  }, [menus]);
-
   return (
     <ProLayout
       {...Common}
@@ -34,7 +30,6 @@ export default function BasicsLayout() {
       {...Footer}
       {...Background}
       {...Content}
-      // {...defaultProps}
       loading={loading}
       location={{
         pathname

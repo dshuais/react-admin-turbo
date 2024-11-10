@@ -75,10 +75,15 @@ export const usePermission = createCustomStore<Store, Actions>(
         Array.from(r.keys()).map(k => {
           const index = routes.findIndex(item => item.path === k);
           const pre = routes[index].children || [],
-            children = r.get(k)?.filter(item => pre.findIndex(i => i.path === item.path) === -1) || [];
+            children = r.get(k)?.filter(item => pre.findIndex(i => i.path === item.path) === -1 && item?.handle?.menuType !== 'C')
+               || [];
+
+          console.log('children:>> ', children);
 
           routes[index].children = [...pre, ...children];
         });
+
+        console.log('r:>> ', r);
 
         const menus = filterToMenus(r.get('/') || []);
         get().SET_MENUS(menus);
@@ -116,11 +121,12 @@ export const usePermission = createCustomStore<Store, Actions>(
  */
 function filterToRouter(routes: Route[]) {
   const newRoutes = filterAsyncRouter(routes);
+  // newRoutes = newRoutes.filter(route => route?.handle?.menuType !== 'C');
 
   const rs = new Map<string, RouteObject[]>();
 
   newRoutes.map(route => {
-    const { parent, ...r } = route;
+    const { parent, ...r } = route || {};
     const k = padSlashFn(parent) || '/';
     const v = rs.get(k);
     if(v) rs.set(k, [...v, r]);
@@ -142,18 +148,19 @@ function filterAsyncRouter(routes: Route[], parentPath?: string) {
     const parent = getParentPath(newRoutes, route, parentPath);
 
     const r: RouteObject & { parent: string } = {
-      index: route.index,
+      // index: route.index,
       id: route.id as unknown as string,
       path: joinPath(route.path, parent),
-      Component: createComponent(route.component),
+      Component: createComponent(route.component!),
       // children: route.children && route.children.length ? filterAsyncRouter(route.children) : void 0,
       handle: {
         name: route.name,
         icon: route.icon,
         parentId: route.parentId,
+        menuType: route.menuType,
         ...(route.handle || {})
       },
-      parent: padSlashFn(route.parent) || '/'
+      parent: '/'
     };
 
     if(route.protected !== false) {
@@ -220,5 +227,5 @@ function getParentPath(list: Route[], route: Route, parentPath?: string) {
 
   const path = joinPath(parent?.path, pParent?.path);
 
-  return path || parentPath || route.parent;
+  return path || parentPath;
 }
