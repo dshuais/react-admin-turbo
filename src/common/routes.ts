@@ -1,8 +1,8 @@
 /*
  * @Author: dushuai
  * @Date: 2024-04-11 11:10:56
- * @LastEditors: dushuais 1137896420@qq.com
- * @LastEditTime: 2024-08-08 21:29:04
+ * @LastEditors: dushuai
+ * @LastEditTime: 2024-11-11 00:05:32
  * @description: 动态路由相关
  */
 
@@ -15,7 +15,7 @@
  * @path 路由路径 index为true时可以不填
  * @name 路由名称 在侧边栏展示
  * @icon 路由图标 在侧边栏展示
- * @menuType 菜单类型 可选值：'M' | 'C' | 'link'
+ * @menuType 菜单类型 可选值：'M' | 'C'  默认'M' 侧边栏菜单类型
  * @component 路由组件 值为pages目录下文件夹名称 和 pages目录下第一级文件名称
  *      嵌套路由时，目录结构应为pages\**\routes\xx\index.tsx
  *      因为减少性能开销 页面规则只支持三种：
@@ -46,8 +46,17 @@ export const dynamicRoutes: App.Route[] = [
     id: 10,
     path: 'home2',
     component: 'home2',
+    name: '一级目录',
+    icon: 'icon',
+    menuType: 'C'
+  },
+  {
+    id: 5,
+    component: 'home2',
     name: '一级路由',
-    icon: 'icon'
+    icon: 'icon',
+    path: 'home',
+    parentId: 10
   },
   {
     id: 2,
@@ -65,21 +74,5 @@ export const dynamicRoutes: App.Route[] = [
         icon: 'icon'
       }
     ]
-  },
-  {
-    id: 3,
-    path: 'home4',
-    component: 'home2/home4',
-    name: '一级路由-2',
-    icon: 'icon',
-    parentId: 10
-  },
-  {
-    id: 4,
-    path: 'home5',
-    component: 'home2/home5',
-    name: '一级路由-3',
-    icon: 'icon',
-    parentId: 3
   }
 ];

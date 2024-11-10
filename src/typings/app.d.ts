@@ -2,7 +2,7 @@
  * @Author: dushuai
  * @Date: 2023-03-20 09:33:25
  * @LastEditors: dushuai
- * @LastEditTime: 2024-04-11 11:12:45
+ * @LastEditTime: 2024-11-10 23:57:11
  * @description: ts类型文件
  */
 
@@ -37,6 +37,10 @@ declare namespace App {
     protected?: boolean
     handle?: Handle
     children?: Array<Route>
+    /**
+     * 菜单类型 'M'：菜单 'C'：目录
+     */
+    menuType?: 'M' | 'C'
   }
 
   type Handle = {
