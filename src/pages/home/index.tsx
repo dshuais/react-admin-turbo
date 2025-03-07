@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div>
       Home
-
+      logo
       <Button onClick={onLogout}>退出</Button>
     </div>
   );
