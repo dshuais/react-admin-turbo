@@ -23,6 +23,9 @@ export default function App() {
     GenerateRoutes().then(r => {
       setRouter(generateRouter(r));
     });
+
+    console.log(router);
+    
   }, []);
 
   return (

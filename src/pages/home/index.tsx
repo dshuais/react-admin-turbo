@@ -11,8 +11,8 @@ export default function Home() {
 
   return (
     <div>
-      Home
-      logo
+      Home test logo
+
       <Button onClick={onLogout}>退出</Button>
     </div>
   );
